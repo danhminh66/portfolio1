@@ -234,7 +234,8 @@ section{position:relative}
 
 @media (max-width:980px){
   .vgrid{grid-template-columns:1fr 1fr 1fr}
-}{position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.86);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;padding:24px;animation:lbox-in .25s ease both}
+}
+.lbox{position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.86);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;padding:24px;animation:lbox-in .25s ease both}
 @keyframes lbox-in{from{opacity:0}to{opacity:1}}
 .lbox-inner{max-width:1100px;width:100%;display:flex;flex-direction:column;gap:14px;max-height:100%}
 .lbox-inner img{max-width:100%;max-height:80vh;object-fit:contain;border-radius:10px;border:1px solid var(--line-2);background:#0a0b0e}
@@ -315,11 +316,137 @@ footer{border-top:1px solid var(--line);margin-top:120px;padding:60px 0 40px}
 @media (max-width:980px){
   .svc,.flow{grid-template-columns:1fr 1fr}
   .section-head h2{font-size:36px}
+  .vgrid{grid-template-columns:1fr 1fr 1fr}
 }
+@media (max-width:760px){
+  /* Container & section spacing */
+  .container{padding:0 18px}
+  section{padding-top:64px}
+  footer{margin-top:80px;padding:48px 0 32px}
+
+  /* HUD: hide nav links + time */
+  .hud .container{height:48px}
+  .hud nav{display:none}
+  .hud .container > div:last-child{display:none}
+
+  /* Section heads stack */
+  .section-head{flex-direction:column;align-items:flex-start;gap:8px;margin-bottom:20px}
+  .section-head h2{font-size:28px !important;line-height:1.05}
+  .section-head .meta{align-items:flex-start}
+
+  /* Hero — Terminal */
+  .hero-terminal-grid{grid-template-columns:1fr !important;gap:14px !important;min-height:0 !important}
+  .hero-terminal-grid > .panel{padding:22px !important;min-height:auto}
+  .hero-terminal-grid h1{font-size:48px !important;line-height:1 !important}
+  .hero-terminal-grid .kpi .val{font-size:28px !important}
+  .hero-terminal-grid .btn{padding:10px 14px !important;font-size:13px}
+
+  /* Hero — Split */
+  .hero-split-stats{grid-template-columns:1fr 1fr !important;gap:14px !important}
+  .hero-split-stats > p{grid-column:1 / -1 !important;margin-bottom:6px}
+  .hero-split-stats .big-num{font-size:26px !important}
+
+  /* Hero — Dashboard */
+  .hero-dash-kpi{grid-template-columns:1fr 1fr !important;gap:10px !important}
+  .hero-dash-kpi .kpi{min-height:auto !important;padding:14px 16px}
+  .hero-dash-kpi .kpi .val{font-size:24px !important}
+
+  /* Hero — Editorial floating stats: hide on mobile, overlap badly */
+  section#overview .panel + div + div,
+  section#overview > .container > div[style*="text-align: center"] > .panel{}
+  section#overview [style*="position: absolute"]{display:none}
+
+  /* Case study grids → stack vertical */
+  .case-cols{grid-template-columns:1fr !important}
+  .case-cols > div{padding:18px !important;border-right:none !important}
+  .case-cols > div:first-child{border-bottom:1px solid var(--line)}
+  .case-head{padding:16px 18px;flex-wrap:wrap;gap:10px}
+  .case-title{flex-wrap:wrap;gap:8px}
+  .case-title h3{font-size:18px}
+  .case-title .tag{font-size:9.5px;padding:2px 6px}
+
+  /* KPI cards inside case — 2 columns OK but tighten */
+  .case .kpi{padding:12px 14px !important}
+  .case .kpi .val{font-size:18px !important}
+  .case .kpi .lbl{font-size:9.5px}
+
+  /* Tables — smaller, tighter */
+  .tbl{font-size:11px}
+  .tbl th, .tbl td{padding:8px 8px}
+  .tbl th{font-size:9.5px;letter-spacing:.04em}
+
+  /* Donut row — wrap */
+  .case-cols > div > div[style*="display: flex"][style*="gap"]{flex-wrap:wrap}
+
+  /* Charts — slightly smaller bar heights */
+  .case-cols [style*="grid-template-columns: repeat"]{gap:6px !important}
+
+  /* Creative gallery: 12-col grid → 2 cols, ignore explicit col positions */
+  .cgrid{grid-template-columns:1fr 1fr !important;gap:10px}
+  .cgrid > .cgrid-item{grid-column:auto !important;grid-row:auto !important}
+  .cgrid-frame{aspect-ratio:4/5 !important}
+  .cgrid-frame.tall{aspect-ratio:4/5 !important}
+
+  /* Video reel: 2 columns */
+  .vgrid{grid-template-columns:1fr 1fr !important;gap:10px;perspective:none}
+  .vcard-3d.seen:hover{transform:none}  /* no hover tilt on touch */
+  .vcard-3d{--deal-tx:0px !important;--deal-ty:40px !important;--deal-rot:0deg !important}
+
+  /* Services + workflow */
+  .svc{grid-template-columns:1fr !important;gap:10px}
+  .svc-card{min-height:0;padding:20px}
+  .svc-card h4{font-size:18px}
+  .flow{grid-template-columns:1fr 1fr !important;gap:10px}
+  .flow-step{min-height:0;padding:16px}
+
+  /* Footer */
+  .footer-cols{grid-template-columns:1fr !important;gap:28px !important}
+  footer h2{font-size:40px !important;line-height:1 !important}
+  footer .btn{padding:10px 14px;font-size:13px}
+  footer > .container > div:last-child{flex-direction:column;gap:10px;align-items:flex-start !important}
+
+  /* Client strip stays 2-col rule from earlier; tighten */
+  .client-strip{padding:14px 18px;gap:14px}
+  .client-avatar{width:48px;height:48px}
+  .client-meta > div:nth-child(2){font-size:16px}
+
+  /* Tweaks panel — keep but smaller */
+  /* (handled by its own component) */
+
+  /* Marquee item: smaller */
+  .marquee .item{font-size:11px;gap:10px}
+}
+
+@media (max-width:480px){
+  .container{padding:0 14px}
+  section{padding-top:48px}
+
+  /* Hero terminal */
+  .hero-terminal-grid h1{font-size:40px !important}
+  .hero-terminal-grid > .panel{padding:18px !important}
+
+  /* Cases — KPI single col when narrow */
+  .case-cols .kpi{padding:10px 12px !important}
+
+  /* Video: single column on tiny screens for legibility */
+  .vgrid{grid-template-columns:1fr !important;max-width:380px;margin:0 auto}
+
+  /* Creative single column */
+  .cgrid{grid-template-columns:1fr !important;max-width:420px;margin:0 auto}
+
+  /* Workflow single col */
+  .flow{grid-template-columns:1fr !important}
+
+  /* H2 even smaller */
+  .section-head h2{font-size:24px !important}
+  footer h2{font-size:30px !important}
+
+  /* Marquee speed up slightly on small screens */
+  .marquee{animation-duration:40s}
+}
+
 @media (max-width:640px){
-  .container{padding:0 20px}
-  .svc,.flow{grid-template-columns:1fr}
-  .section-head h2{font-size:28px}
+  .container{padding:0 16px}
 }
 </style>
 </head>

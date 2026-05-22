@@ -75,7 +75,7 @@ function Hero({ layout = "terminal" }) {
 /* --- variant A: terminal/console intro + KPI rail right --- */
 function HeroTerminal() {
   return (
-    <div style={{ display: "grid", gridTemplateColumns: "1.3fr .9fr", gap: 32, alignItems: "stretch", minHeight: 560 }}>
+    <div className="hero-terminal-grid" style={{ display: "grid", gridTemplateColumns: "1.3fr .9fr", gap: 32, alignItems: "stretch", minHeight: 560 }}>
       <div className="panel" style={{ padding: 36, display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
         <div>
           <div style={{ display: "flex", gap: 8, marginBottom: 22 }}>
@@ -168,7 +168,7 @@ function HeroSplit() {
       <h1 style={{ fontSize: "clamp(72px, 14vw, 220px)", lineHeight: .88, letterSpacing: "-.04em", fontWeight: 600, margin: "32px 0 0" }}>
         Nguyễn<br />Cao Danh<br />Minh<span style={{ color: "var(--accent)" }}>.</span>
       </h1>
-      <div style={{ display: "grid", gridTemplateColumns: "1.2fr 1fr 1fr 1fr", gap: 20, marginTop: 40, alignItems: "end" }}>
+      <div className="hero-split-stats" style={{ display: "grid", gridTemplateColumns: "1.2fr 1fr 1fr 1fr", gap: 20, marginTop: 40, alignItems: "end" }}>
         <p style={{ margin: 0, fontSize: 16, lineHeight: 1.55, color: "var(--mute)" }}>
           Meta Ads chuyển đổi qua tin nhắn &amp; website — biến ngân sách thành đơn hàng có thể đo đếm hằng ngày.
         </p>
@@ -257,7 +257,7 @@ function HeroDashboard() {
         <a href="#contact" className="btn primary">Đặt lịch trao đổi →</a>
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 16, marginTop: 36 }}>
+      <div className="hero-dash-kpi" style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 16, marginTop: 36 }}>
         {[
         { l: "Best ROI", v: 22, suffix: "x", sub: "FICAR · T8/25", spark: [9, 22, 10, 15, 14, 11], color: "var(--accent)" },
         { l: "Peak Revenue", v: 663.6, suffix: "M", sub: "T1/2026 · FICAR", spark: [130, 269, 186, 663, 352, 358], color: "var(--accent)" },
@@ -434,7 +434,7 @@ function FicarCase() {
     <div className="case">
       <CaseHead idx="01" title="FICAR" industry="Linh kiện ô tô" period={FICAR.period} tag="flagship" kpi="ROI peak 22x" />
       <ClientStrip client={CLIENTS.ficar} />
-      <div style={{ display: "grid", gridTemplateColumns: "1.1fr .9fr", gap: 0 }}>
+      <div className="case-cols" style={{ display: "grid", gridTemplateColumns: "1.1fr .9fr", gap: 0 }}>
         <div style={{ padding: 24, borderRight: "1px solid var(--line)" }}>
           <div className="mono" style={{ fontSize: 11, color: "var(--mute)", letterSpacing: ".14em", marginBottom: 8 }}>SPEND VS REVENUE · BY MONTH (₫M)</div>
           <DualBars rows={FICAR.rows} height={220} />
@@ -495,7 +495,7 @@ function AlohaCase() {
     <div className="case">
       <CaseHead idx="02" title="Kỷ yếu Aloha Sài Gòn" industry="Chụp ảnh kỷ yếu" period={ALOHA.period} tag="seasonal" kpi="87% KPI đơn · T4" />
       <ClientStrip client={CLIENTS.aloha} />
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1.3fr", gap: 0 }}>
+      <div className="case-cols" style={{ display: "grid", gridTemplateColumns: "1fr 1.3fr", gap: 0 }}>
         <div style={{ padding: 24, borderRight: "1px solid var(--line)" }}>
           <div style={{ display: "flex", gap: 22, alignItems: "center", marginBottom: 18 }}>
             <Donut value={87} label="ĐƠN" />
@@ -556,7 +556,7 @@ function FflCase() {
     <div className="case">
       <CaseHead idx="03" title="FitForLife Gym & Pilates" industry="Premium fitness" period={FFL.period} tag="quick-launch" kpi="CTR 44.15% Recruit" />
       <ClientStrip client={CLIENTS.ffl} />
-      <div style={{ display: "grid", gridTemplateColumns: "1.1fr 1fr", gap: 0 }}>
+      <div className="case-cols" style={{ display: "grid", gridTemplateColumns: "1.1fr 1fr", gap: 0 }}>
         <div style={{ padding: 24, borderRight: "1px solid var(--line)" }}>
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
             {FFL.highlights.map(([l, v, s]) =>
@@ -942,7 +942,7 @@ function ContactFooter() {
   return (
     <footer id="contact">
       <div className="container">
-        <div style={{ display: "grid", gridTemplateColumns: "1.4fr 1fr 1fr", gap: 40, alignItems: "start" }}>
+        <div className="footer-cols" style={{ display: "grid", gridTemplateColumns: "1.4fr 1fr 1fr", gap: 40, alignItems: "start" }}>
           <div>
             <div className="eyebrow">06 / contact</div>
             <h2 style={{ fontSize: 64, lineHeight: .98, letterSpacing: "-.02em", fontWeight: 600, margin: "14px 0 18px" }}>
