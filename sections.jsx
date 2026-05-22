@@ -374,6 +374,44 @@ function CaseStudies() {
 
 }
 
+function ClientStrip({ client }) {
+  const [imgOk, setImgOk] = useState(true);
+  const avatarUrl = `https://graph.facebook.com/${client.fbHandle}/picture?type=large&width=200&height=200`;
+  return (
+    <div className="client-strip">
+      <a href={client.fb} target="_blank" rel="noreferrer" className="client-avatar"
+      style={{ background: `linear-gradient(135deg, ${client.palette[0]}, ${client.palette[1]})` }}>
+        {imgOk ?
+        <img src={avatarUrl} alt={client.name} loading="lazy" referrerPolicy="no-referrer"
+        onError={() => setImgOk(false)} /> :
+
+        <span style={{ fontFamily: "Geist", fontSize: 28, fontWeight: 700, color: "#fff", letterSpacing: "-.02em" }}>{client.initial}</span>
+        }
+      </a>
+      <div className="client-meta">
+        <div className="mono" style={{ fontSize: 10.5, color: "var(--mute)", letterSpacing: ".18em", textTransform: "uppercase" }}>Client</div>
+        <div style={{ fontSize: 18, fontWeight: 600, marginTop: 2, letterSpacing: "-.01em" }}>{client.name}</div>
+        <div className="mono" style={{ fontSize: 12, color: "var(--mute)", marginTop: 3 }}>{client.handle} · {client.sub}</div>
+      </div>
+      <div className="client-cta">
+        <a href={client.fb} target="_blank" rel="noreferrer" className="client-btn">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 14V8.5h1.85l.28-2.16H9V4.97c0-.62.17-1.05 1.07-1.05H11.2V2c-.2-.03-.9-.08-1.7-.08-1.69 0-2.85 1.03-2.85 2.92v1.5H4.8V8.5h1.85V14H9z" fill="currentColor" /></svg>
+          Fanpage
+          <span className="arr">↗</span>
+        </a>
+        <a href={client.report} target="_blank" rel="noreferrer" className="client-btn report">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+            <rect x="2" y="1.5" width="10" height="11" rx="1" stroke="currentColor" strokeWidth="1.2" fill="none" />
+            <path d="M5 5h4M5 7h4M5 9h2.5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
+          </svg>
+          Báo cáo Google Sheet
+          <span className="arr">↗</span>
+        </a>
+      </div>
+    </div>);
+
+}
+
 function CaseHead({ idx, title, industry, period, tag, kpi }) {
   return (
     <div className="case-head">
@@ -395,6 +433,7 @@ function FicarCase() {
   return (
     <div className="case">
       <CaseHead idx="01" title="FICAR" industry="Linh kiện ô tô" period={FICAR.period} tag="flagship" kpi="ROI peak 22x" />
+      <ClientStrip client={CLIENTS.ficar} />
       <div style={{ display: "grid", gridTemplateColumns: "1.1fr .9fr", gap: 0 }}>
         <div style={{ padding: 24, borderRight: "1px solid var(--line)" }}>
           <div className="mono" style={{ fontSize: 11, color: "var(--mute)", letterSpacing: ".14em", marginBottom: 8 }}>SPEND VS REVENUE · BY MONTH (₫M)</div>
@@ -455,6 +494,7 @@ function AlohaCase() {
   return (
     <div className="case">
       <CaseHead idx="02" title="Kỷ yếu Aloha Sài Gòn" industry="Chụp ảnh kỷ yếu" period={ALOHA.period} tag="seasonal" kpi="87% KPI đơn · T4" />
+      <ClientStrip client={CLIENTS.aloha} />
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1.3fr", gap: 0 }}>
         <div style={{ padding: 24, borderRight: "1px solid var(--line)" }}>
           <div style={{ display: "flex", gap: 22, alignItems: "center", marginBottom: 18 }}>
@@ -478,8 +518,8 @@ function AlohaCase() {
             )}
           </div>
 
-          <p style={{ fontSize: 13, lineHeight: 1.6, color: "var(--mute)", marginTop: 18 }}>
-            Mùa cao điểm: gom 1.092 leads chất lượng trong 1 tháng. Tỷ lệ data tiềm năng 100% — không có data rác. CPO online 897k₫ thấp hơn KPI nội bộ.
+          <p style={{ fontSize: 13, lineHeight: 1.6, color: "var(--mute)", marginTop: 18 }}>Mùa cao điểm: gom 1.092 leads chất lượng trong 1 tháng. CPO online 897k₫ thấp hơn KPI nội bộ.
+
           </p>
         </div>
 
@@ -515,6 +555,7 @@ function FflCase() {
   return (
     <div className="case">
       <CaseHead idx="03" title="FitForLife Gym & Pilates" industry="Premium fitness" period={FFL.period} tag="quick-launch" kpi="CTR 44.15% Recruit" />
+      <ClientStrip client={CLIENTS.ffl} />
       <div style={{ display: "grid", gridTemplateColumns: "1.1fr 1fr", gap: 0 }}>
         <div style={{ padding: 24, borderRight: "1px solid var(--line)" }}>
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
@@ -633,25 +674,7 @@ function Portfolio({ onOpen }) {
           </div>
 
           <div className="vgrid">
-            {VIDEOS.map((v, i) => <VideoCard key={v.id} item={v} idx={i} onOpen={onOpen} />)}
-          </div>
-
-          <div className="upload-note">
-            <div className="mono" style={{ fontSize: 10.5, letterSpacing: ".18em", color: "var(--accent)", textTransform: "uppercase" }}>How to add videos</div>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 18, marginTop: 12 }}>
-              <div>
-                <div className="mono" style={{ fontSize: 11, color: "var(--text)", marginBottom: 4 }}>1 · Upload .mp4</div>
-                <div style={{ fontSize: 13, color: "var(--mute)", lineHeight: 1.55 }}>Kéo thả file mp4 (≤25MB/clip) vào chat như khi up ảnh. Mình copy vào <span className="mono" style={{ color: "var(--accent)" }}>media/</span> và embed.</div>
-              </div>
-              <div>
-                <div className="mono" style={{ fontSize: 11, color: "var(--text)", marginBottom: 4 }}>2 · Link YouTube / Vimeo</div>
-                <div style={{ fontSize: 13, color: "var(--mute)", lineHeight: 1.55 }}>Gửi link, mình embed iframe full-screen được luôn.</div>
-              </div>
-              <div>
-                <div className="mono" style={{ fontSize: 11, color: "var(--text)", marginBottom: 4 }}>3 · Link Reels / TikTok</div>
-                <div style={{ fontSize: 13, color: "var(--mute)", lineHeight: 1.55 }}>Reels/TikTok không cho embed bên ngoài. Mình sẽ làm <em style={{ fontStyle: "normal", color: "var(--accent)" }}>thumbnail card → click sang link gốc</em>.</div>
-              </div>
-            </div>
+            {VIDEOS.map((v, i) => <VideoCard key={v.id} item={v} idx={i} total={VIDEOS.length} onOpen={onOpen} />)}
           </div>
         </div>
       </div>
@@ -659,25 +682,94 @@ function Portfolio({ onOpen }) {
 
 }
 
-function VideoCard({ item, idx, onOpen }) {
+function VideoCard({ item, idx, total = 5, onOpen }) {
   const isPh = !item.src && !item.external;
   const isExternal = !!item.external;
+  const [thumb, setThumb] = useState(null);
+  const [ref, seen] = useInView();
+  const cardRef = useRef(null);
+  useEffect(() => {
+    if (!isExternal) return;
+    let cancelled = false;
+    fetch(`https://www.tiktok.com/oembed?url=${encodeURIComponent(item.external)}`).
+    then((r) => r.ok ? r.json() : Promise.reject(r.status)).
+    then((j) => {if (!cancelled && j && j.thumbnail_url) setThumb(j.thumbnail_url);}).
+    catch(() => {});
+    return () => {cancelled = true;};
+  }, [item.external, isExternal]);
+
+  // 3D tilt parallax on pointer move
+  useEffect(() => {
+    const el = cardRef.current;
+    if (!el) return;
+    let raf;
+    const onMove = (e) => {
+      const r = el.getBoundingClientRect();
+      const x = (e.clientX - r.left) / r.width - 0.5;
+      const y = (e.clientY - r.top) / r.height - 0.5;
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        el.style.setProperty("--rx", `${-y * 12}deg`);
+        el.style.setProperty("--ry", `${x * 14}deg`);
+        el.style.setProperty("--mx", `${(x + 0.5) * 100}%`);
+        el.style.setProperty("--my", `${(y + 0.5) * 100}%`);
+      });
+    };
+    const onLeave = () => {
+      cancelAnimationFrame(raf);
+      el.style.setProperty("--rx", "0deg");
+      el.style.setProperty("--ry", "0deg");
+    };
+    el.addEventListener("pointermove", onMove);
+    el.addEventListener("pointerleave", onLeave);
+    return () => {
+      el.removeEventListener("pointermove", onMove);
+      el.removeEventListener("pointerleave", onLeave);
+      cancelAnimationFrame(raf);
+    };
+  }, []);
+
   const handleClick = () => {
     if (isExternal) window.open(item.external, "_blank", "noopener,noreferrer");else
     if (item.src) onOpen && onOpen({ ...item, video: true });
   };
+  // Deal-in arrival values
+  const offset = idx - (total - 1) / 2;
+  const dealStyle = {
+    cursor: isPh ? "default" : "pointer",
+    "--deal-tx": seen ? "0px" : `${-offset * 60}px`,
+    "--deal-ty": seen ? "0px" : "90px",
+    "--deal-rot": seen ? "0deg" : `${offset * -8 + (idx % 2 ? 5 : -5)}deg`,
+    "--deal-scale": seen ? 1 : 0.78,
+    "--deal-opacity": seen ? 1 : 0,
+    "--deal-delay": `${idx * 130}ms`
+  };
+
   return (
     <div
-      className="vcard"
-      style={{ cursor: isPh ? "default" : "pointer" }}
+      ref={(node) => {ref.current = node;cardRef.current = node;}}
+      className={"vcard vcard-3d" + (seen ? " seen" : "")}
+      style={dealStyle}
       onClick={handleClick}>
       
-      <div className={"vcard-frame" + (isPh || isExternal ? " placeholder" : "")}>
+      <div className={"vcard-frame" + (isPh || isExternal && !thumb ? " placeholder" : "")}>
+        {isExternal && thumb &&
+        <img src={thumb} alt={item.label} loading="lazy" referrerPolicy="no-referrer" className="tt-thumb"
+        onError={() => setThumb(null)} />
+        }
+        {isExternal && thumb &&
+        <div className="tt-play-overlay">
+            <svg width="56" height="56" viewBox="0 0 56 56">
+              <circle cx="28" cy="28" r="27" fill="rgba(0,0,0,.45)" stroke="rgba(255,255,255,.85)" strokeWidth="1.4" />
+              <path d="M22 17 L40 28 L22 39 Z" fill="#fff" />
+            </svg>
+          </div>
+        }
         {item.src &&
         <video src={item.src} muted loop playsInline preload="metadata"
         onMouseEnter={(e) => e.target.play()} onMouseLeave={(e) => e.target.pause()} />
         }
-        {isExternal &&
+        {isExternal && !thumb &&
         <div className="tt-card">
             <div className="tt-bg" />
             <div className="tt-logo">
@@ -706,6 +798,7 @@ function VideoCard({ item, idx, onOpen }) {
             <div className="mono" style={{ fontSize: 10.5, color: "var(--mute)", letterSpacing: ".14em", marginTop: 10, textTransform: "uppercase" }}>awaiting upload</div>
           </div>
         }
+        <div className="vcard-glare" aria-hidden="true" />
         <div className="vcard-overlay">
           <span className="mono" style={{ fontSize: 10.5, color: "var(--accent)", letterSpacing: ".14em" }}>/ {String(idx + 1).padStart(2, "0")}</span>
           <span className="mono" style={{ fontSize: 10.5, color: "var(--text)", letterSpacing: ".14em" }}>{isExternal ? "OPEN ↗" : item.duration}</span>
@@ -723,13 +816,19 @@ function VideoCard({ item, idx, onOpen }) {
 function CreativeCard({ item, idx, onOpen }) {
   const isPh = !item.src;
   const span2 = item.row === "span 2";
+  const [ref, seen] = useInView();
   return (
     <div
+      ref={ref}
       className="cgrid-item"
       style={{
         gridColumn: item.col,
         gridRow: item.row || "auto",
-        cursor: isPh ? "default" : "zoom-in"
+        cursor: isPh ? "default" : "zoom-in",
+        opacity: seen ? 1 : 0,
+        transform: seen ? "none" : "translateY(32px) scale(.97)",
+        transition: `opacity .9s cubic-bezier(.2,.7,.2,1) ${idx * 70}ms, transform .9s cubic-bezier(.2,.7,.2,1) ${idx * 70}ms`,
+        willChange: "opacity, transform"
       }}
       onClick={() => !isPh && onOpen(item)}>
       
@@ -849,8 +948,8 @@ function ContactFooter() {
             <h2 style={{ fontSize: 64, lineHeight: .98, letterSpacing: "-.02em", fontWeight: 600, margin: "14px 0 18px" }}>
               Sẵn sàng<br />cho dự án tiếp theo<span style={{ color: "var(--accent)" }}>.</span>
             </h2>
-            <p style={{ color: "var(--mute)", fontSize: 16, lineHeight: 1.55, maxWidth: 460 }}>
-              Đặt lịch trao đổi 30 phút để mình audit nhanh tình hình ads hiện tại của bạn. Miễn phí, không cam kết.
+            <p style={{ color: "var(--mute)", fontSize: 16, lineHeight: 1.55, maxWidth: 460 }}>Đặt lịch trao đổi 30 phút để mình audit nhanh tình hình ads hiện tại của bạn.
+
             </p>
             <div style={{ display: "flex", gap: 12, marginTop: 24, flexWrap: "wrap" }}>
               <a href="mailto:danhminh66@gmail.com" className="btn primary">danhminh66@gmail.com</a>

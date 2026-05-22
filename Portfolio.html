@@ -99,6 +99,24 @@ section{position:relative}
 .case-title h3{margin:0;font-size:24px;font-weight:600;letter-spacing:-.01em}
 .case-title .tag{font-family:"JetBrains Mono",monospace;font-size:10.5px;letter-spacing:.14em;color:var(--mute);text-transform:uppercase;border:1px solid var(--line-2);padding:3px 8px;border-radius:6px}
 
+/* Client strip */
+.client-strip{display:grid;grid-template-columns:auto 1fr auto;gap:18px;align-items:center;padding:18px 24px;border-bottom:1px solid var(--line);background:linear-gradient(180deg, rgba(255,255,255,.015), transparent)}
+.client-avatar{width:56px;height:56px;border-radius:14px;overflow:hidden;display:flex;align-items:center;justify-content:center;border:1px solid var(--line-2);flex-shrink:0;text-decoration:none}
+.client-avatar img{width:100%;height:100%;object-fit:cover;display:block}
+.client-meta{min-width:0}
+.client-cta{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+.client-btn{display:inline-flex;align-items:center;gap:8px;padding:8px 13px;border-radius:999px;border:1px solid var(--line-2);background:rgba(255,255,255,.02);color:var(--text);font-size:12.5px;text-decoration:none;transition:.18s ease;font-family:"Geist",sans-serif}
+.client-btn:hover{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.22)}
+.client-btn .arr{color:var(--mute);font-family:"JetBrains Mono",monospace}
+.client-btn.report{border-color:rgba(200,255,62,.35);background:rgba(200,255,62,.06);color:var(--accent)}
+.client-btn.report:hover{background:rgba(200,255,62,.12)}
+.client-btn.report .arr{color:var(--accent)}
+
+@media (max-width:760px){
+  .client-strip{grid-template-columns:auto 1fr;row-gap:14px}
+  .client-cta{grid-column:1 / -1;justify-content:flex-start}
+}
+
 /* Table */
 .tbl{width:100%;border-collapse:separate;border-spacing:0;font-family:"JetBrains Mono",monospace;font-size:12.5px}
 .tbl th,.tbl td{padding:11px 14px;text-align:right;border-bottom:1px dashed var(--line)}
@@ -148,13 +166,55 @@ section{position:relative}
 .lbox-meta{display:flex;justify-content:space-between;align-items:flex-end;gap:20px}
 
 /* Video grid */
-.vgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
+.vgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;perspective:1400px}
 .vcard{display:flex;flex-direction:column;transition:.2s ease}
 .vcard:hover .vcard-overlay{opacity:1}
 .vcard:hover .tt-play svg{transform:scale(1.1)}
+
+/* 3D tilt + deal-in arrival */
+.vcard-3d{
+  --rx:0deg; --ry:0deg; --mx:50%; --my:50%;
+  --deal-tx:0px; --deal-ty:90px; --deal-rot:-6deg; --deal-scale:.78; --deal-opacity:0; --deal-delay:0ms;
+  transform-style:preserve-3d;
+  transform:
+    translate3d(var(--deal-tx), var(--deal-ty), 0)
+    rotate(var(--deal-rot))
+    scale(var(--deal-scale));
+  opacity:var(--deal-opacity);
+  transition:
+    transform 1s cubic-bezier(.2,1.2,.25,1) var(--deal-delay),
+    opacity .8s ease var(--deal-delay);
+  will-change:transform, opacity;
+}
+.vcard-3d.seen:hover{
+  transform: rotateX(var(--rx)) rotateY(var(--ry)) translateZ(20px);
+  transition: transform .15s ease;
+  z-index:5;
+}
+.vcard-3d.seen .vcard-frame{ transition: box-shadow .3s ease, border-color .3s ease }
+.vcard-3d.seen:hover .vcard-frame{
+  box-shadow:
+    0 0 0 1px rgba(254,44,85,.35),
+    -18px 22px 60px -20px rgba(254,44,85,.45),
+    18px 22px 60px -20px rgba(37,244,238,.35);
+  border-color:transparent;
+}
+
+/* Glare highlight that tracks the cursor */
+.vcard-glare{
+  position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+  background:radial-gradient(420px circle at var(--mx) var(--my), rgba(255,255,255,.18), transparent 45%);
+  opacity:0;transition:opacity .25s ease;z-index:4;mix-blend-mode:overlay;
+}
+.vcard-3d.seen:hover .vcard-glare{opacity:1}
+
 .vcard-frame{position:relative;aspect-ratio:9/16;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:#0e1014;display:flex;align-items:center;justify-content:center}
 .vcard-frame.placeholder{background:repeating-linear-gradient(135deg,#0e1014 0 12px,#101218 12px 24px)}
 .vcard-frame video{width:100%;height:100%;object-fit:cover}
+.tt-thumb{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;filter:saturate(.95)}
+.tt-play-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;z-index:2;transition:.25s ease}
+.tt-play-overlay svg{filter:drop-shadow(0 6px 18px rgba(0,0,0,.45));transition:transform .3s cubic-bezier(.2,.7,.2,1)}
+.vcard:hover .tt-play-overlay svg{transform:scale(1.08)}
 .vcard-overlay{position:absolute;inset:0;display:flex;align-items:flex-start;justify-content:space-between;padding:12px 14px;background:linear-gradient(180deg,rgba(8,9,11,.7) 0%,transparent 30%,transparent 60%,rgba(8,9,11,.7) 100%);opacity:.65;transition:.2s ease;pointer-events:none;z-index:3}
 
 /* TikTok thumbnail card */
@@ -174,7 +234,11 @@ section{position:relative}
 
 @media (max-width:980px){
   .vgrid{grid-template-columns:1fr 1fr 1fr}
-}
+}{position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.86);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;padding:24px;animation:lbox-in .25s ease both}
+@keyframes lbox-in{from{opacity:0}to{opacity:1}}
+.lbox-inner{max-width:1100px;width:100%;display:flex;flex-direction:column;gap:14px;max-height:100%}
+.lbox-inner img{max-width:100%;max-height:80vh;object-fit:contain;border-radius:10px;border:1px solid var(--line-2);background:#0a0b0e}
+.lbox-meta{display:flex;justify-content:space-between;align-items:flex-end;gap:20px}
 
 /* Sparkline path */
 .spark-path{fill:none;stroke:var(--accent);stroke-width:1.6}
@@ -237,9 +301,10 @@ section{position:relative}
   transition-duration:.001ms !important;
   transition-delay:0ms !important;
 }
-@media (prefers-reduced-motion: reduce){
-  *, *::before, *::after{animation-duration:.001ms !important;transition-duration:.001ms !important}
-}
+/* Disable 3D tilt + deal-in for reduced motion */
+.no-motion .vcard-3d{transform:none !important;opacity:1 !important;transition:none !important}
+.no-motion .vcard-3d.seen:hover{transform:none !important}
+.no-motion .vcard-glare{display:none}
 
 /* HUD ticker */
 .hud{position:sticky;top:0;z-index:50;background:rgba(8,9,11,.7);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}

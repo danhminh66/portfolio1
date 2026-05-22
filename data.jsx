@@ -94,6 +94,39 @@ const WORKFLOW = [
   { n: "05", title: "Report",    desc: "Báo cáo theo tuần / tháng, gợi ý chiến lược kỳ tiếp theo." },
 ];
 
+const CLIENTS = {
+  ficar: {
+    name: "TRỢ LÝ Ô TÔ",
+    sub:  "Nền tảng sàn TMĐT cho xe hơi · Hệ thống gara Thành Phát",
+    handle: "@trolyotoofficial",
+    fbHandle: "trolyotoofficial",
+    fb: "https://www.facebook.com/trolyotoofficial",
+    report: "https://docs.google.com/spreadsheets/d/1Cj-JyW_tWz2Q7lR2-OcqQZziJU9g0_NFzJ7OezyBy30/edit?usp=sharing",
+    palette: ["#0ec3c9", "#0a7c8a"],
+    initial: "T",
+  },
+  aloha: {
+    name: "ALOHA SÀI GÒN",
+    sub:  "Studio chụp ảnh kỷ yếu · Sài Gòn",
+    handle: "@aloha.kyyeusaigon",
+    fbHandle: "aloha.kyyeusaigon",
+    fb: "https://www.facebook.com/aloha.kyyeusaigon",
+    report: "https://docs.google.com/spreadsheets/d/1kvX2RxLJxdkLszORCRKIL7jnEUlgdfmLq0S9j4chsLk/edit?usp=sharing",
+    palette: ["#ff7a3d", "#c93f1a"],
+    initial: "A",
+  },
+  ffl: {
+    name: "FIT FOR LIFE",
+    sub:  "Gym & Pilates · Premium studio",
+    handle: "@fitforlife.vn",
+    fbHandle: "fitforlife.vn",
+    fb: "https://www.facebook.com/fitforlife.vn",
+    report: "https://docs.google.com/spreadsheets/d/18DQHNPNmLwbs2ZsQUtDDcego9hWcmkB7BY6ID39PAp8/edit?usp=sharing",
+    palette: ["#1a1a1a", "#3a3a3a"],
+    initial: "F",
+  },
+};
+
 const TICKERS = [
   { brand: "FICAR",      kpi: "ROI",       val: "22x",     d: "+144%" },
   { brand: "FICAR",      kpi: "Revenue",   val: "663.6M",  d: "T1/26 peak" },
@@ -105,4 +138,4 @@ const TICKERS = [
   { brand: "FICAR",      kpi: "Spend",     val: "188.7M",  d: "10 tháng" },
 ];
 
-Object.assign(window, { FICAR, ALOHA, FFL, STATS, SERVICES, WORKFLOW, TICKERS });
+Object.assign(window, { FICAR, ALOHA, FFL, STATS, SERVICES, WORKFLOW, TICKERS, CLIENTS });
